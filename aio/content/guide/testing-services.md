@@ -26,17 +26,17 @@ Services often depend on other services that Angular injects into the constructo
 In many cases, it's easy to create and _inject_ these dependencies by hand while
 calling the service's constructor.
 
-The `MasterService` is a simple example:
+The `MainService` is a simple example:
 
-<code-example path="testing/src/app/demo/demo.ts" region="MasterService" header="app/demo/demo.ts"></code-example>
+<code-example path="testing/src/app/demo/demo.ts" region="MainService" header="app/demo/demo.ts"></code-example>
 
-`MasterService` delegates its only method, `getValue`, to the injected `ValueService`.
+`MainService` delegates its only method, `getValue`, to the injected `ValueService`.
 
 Here are several ways to test it.
 
-<code-example path="testing/src/app/demo/demo.spec.ts" region="MasterService" header="app/demo/demo.spec.ts"></code-example>
+<code-example path="testing/src/app/demo/demo.spec.ts" region="MainService" header="app/demo/demo.spec.ts"></code-example>
 
-The first test creates a `ValueService` with `new` and passes it to the `MasterService` constructor.
+The first test creates a `ValueService` with `new` and passes it to the `MainService` constructor.
 
 However, injecting the real service rarely works well as most dependent services are difficult to create and control.
 
@@ -106,11 +106,11 @@ When testing a service with a dependency, provide the mock in the `providers` ar
 
 In the following example, the mock is a spy object.
 
-<code-example path="testing/src/app/demo/demo.testbed.spec.ts" region="master-service-before-each"></code-example>
+<code-example path="testing/src/app/demo/demo.testbed.spec.ts" region="main-service-before-each"></code-example>
 
 The test consumes that spy in the same way it did earlier.
 
-<code-example path="testing/src/app/demo/demo.testbed.spec.ts" region="master-service-it">
+<code-example path="testing/src/app/demo/demo.testbed.spec.ts" region="main-service-it">
 </code-example>
 
 {@a no-before-each}
@@ -122,7 +122,7 @@ and rely on the `TestBed` to create classes and inject services.
 
 There's another school of testing that never calls `beforeEach()` and prefers to create classes explicitly rather than use the `TestBed`.
 
-Here's how you might rewrite one of the `MasterService` tests in that style.
+Here's how you might rewrite one of the `MainService` tests in that style.
 
 Begin by putting re-usable, preparatory code in a _setup_ function instead of `beforeEach()`.
 
@@ -132,8 +132,8 @@ Begin by putting re-usable, preparatory code in a _setup_ function instead of `b
   header="app/demo/demo.spec.ts (setup)"></code-example>
 
 The `setup()` function returns an object literal
-with the variables, such as `masterService`, that a test might reference.
-You don't define _semi-global_ variables (e.g., `let masterService: MasterService`)
+with the variables, such as `mainService`, that a test might reference.
+You don't define _semi-global_ variables (e.g., `let mainService: MainService`)
 in the body of the `describe()`.
 
 Then each test invokes `setup()` in its first line, before continuing
